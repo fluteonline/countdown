@@ -7,18 +7,31 @@ var WINDOW_WIDTH = 1024,
     //第一个数字距离画布左边距的距离
     MARGIN_LEFT = 30;
 
+const endTime = new Date('2016/4/22,22:00:00');
+var curShowTimeSeconds = 0;
+
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d');
 
 canvas.width = WINDOW_WIDTH;
 canvas.height = WINDOW_HEIGHT;
 
+curShowTimeSeconds = getCurrentShowTimeSeconds();
+
 render(context);
 
+function getCurrentShowTimeSeconds(){
+    var curTime = new Date(),
+        ret = endTime.getTime() - curTime.getTime();
+    ret = Math.round(ret/1000);
+
+    return ret >= 0? ret:0;
+}
+
 function render(cxt){
-    var hours = 12,
-        minutes = 34,
-        seconds = 56;
+    var hours = parseInt(curShowTimeSeconds/(60*60)),
+        minutes = parseInt(curShowTimeSeconds/60%60),
+        seconds = curShowTimeSeconds % 60;
 
     renderDigit(MARGIN_LEFT,MARGIN_TOP,parseInt(hours/10),cxt);
     renderDigit(MARGIN_LEFT+(7*2+1)*(RADIUS+1),MARGIN_TOP,parseInt(hours%10),cxt);
