@@ -7,7 +7,7 @@ var WINDOW_WIDTH = 1024,
     //第一个数字距离画布左边距的距离
     MARGIN_LEFT = 30;
 
-const endTime = new Date('2016/4/22,22:00:00');
+const endTime = new Date('2016/4/22,10:00:00');
 var curShowTimeSeconds = 0;
 
 var canvas = document.getElementById('canvas'),
@@ -18,7 +18,11 @@ canvas.height = WINDOW_HEIGHT;
 
 curShowTimeSeconds = getCurrentShowTimeSeconds();
 
-render(context);
+setInterval(function(){
+    render(context);
+    update();
+},50);
+
 
 function getCurrentShowTimeSeconds(){
     var curTime = new Date(),
@@ -28,7 +32,23 @@ function getCurrentShowTimeSeconds(){
     return ret >= 0? ret:0;
 }
 
+function update(){
+    var nextShowTimeSeconds = getCurrentShowTimeSeconds(),
+        nextHours = parseInt(nextShowTimeSeconds/(60*60)),
+        nextMinutes = parseInt(nextShowTimeSeconds/60%60),
+        nextSeconds = nextShowTimeSeconds % 60,
+        curHours = parseInt(curShowTimeSeconds/(60*60)),
+        curMinutes = parseInt(curShowTimeSeconds/60%60),
+        curSeconds = curShowTimeSeconds % 60;
+
+    if(nextSeconds != curSeconds){
+        curShowTimeSeconds = nextShowTimeSeconds;
+    }
+}
+
 function render(cxt){
+    cxt.clearRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT);
+
     var hours = parseInt(curShowTimeSeconds/(60*60)),
         minutes = parseInt(curShowTimeSeconds/60%60),
         seconds = curShowTimeSeconds % 60;
