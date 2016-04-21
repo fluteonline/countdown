@@ -6,7 +6,7 @@ var WINDOW_WIDTH = 1024,
     MARGIN_TOP = 60,
     //第一个数字距离画布左边距的距离
     MARGIN_LEFT = 30;
-
+//结束时间
 const endTime = new Date('2016/4/22,10:00:00');
 var curShowTimeSeconds = 0;
 
