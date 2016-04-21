@@ -46,34 +46,34 @@ function update(){
     }
 }
 
-function render(cxt){
-    cxt.clearRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT);
+function render(ctx){
+    ctx.clearRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT);
 
     var hours = parseInt(curShowTimeSeconds/(60*60)),
         minutes = parseInt(curShowTimeSeconds/60%60),
         seconds = curShowTimeSeconds % 60;
 
-    renderDigit(MARGIN_LEFT,MARGIN_TOP,parseInt(hours/10),cxt);
-    renderDigit(MARGIN_LEFT+(7*2+1)*(RADIUS+1),MARGIN_TOP,parseInt(hours%10),cxt);
-    renderDigit(MARGIN_LEFT+(15*2)*(RADIUS+1),MARGIN_TOP,10,cxt);
-    renderDigit(MARGIN_LEFT+(15*2+4*2+1)*(RADIUS+1),MARGIN_TOP,parseInt(minutes/10),cxt);
-    renderDigit(MARGIN_LEFT+(45+9)*(RADIUS+1),MARGIN_TOP,parseInt(minutes%10),cxt);
-    renderDigit(MARGIN_LEFT+(60+9)*(RADIUS+1),MARGIN_TOP,10,cxt);
-    renderDigit(MARGIN_LEFT+(60+18)*(RADIUS+1),MARGIN_TOP,parseInt(seconds/10),cxt);
-    renderDigit(MARGIN_LEFT+(75+18)*(RADIUS+1),MARGIN_TOP,parseInt(seconds%10),cxt);
+    renderDigit(MARGIN_LEFT,MARGIN_TOP,parseInt(hours/10),ctx);
+    renderDigit(MARGIN_LEFT+(7*2+1)*(RADIUS+1),MARGIN_TOP,parseInt(hours%10),ctx);
+    renderDigit(MARGIN_LEFT+(15*2)*(RADIUS+1),MARGIN_TOP,10,ctx);
+    renderDigit(MARGIN_LEFT+(15*2+4*2+1)*(RADIUS+1),MARGIN_TOP,parseInt(minutes/10),ctx);
+    renderDigit(MARGIN_LEFT+(45+9)*(RADIUS+1),MARGIN_TOP,parseInt(minutes%10),ctx);
+    renderDigit(MARGIN_LEFT+(60+9)*(RADIUS+1),MARGIN_TOP,10,ctx);
+    renderDigit(MARGIN_LEFT+(60+18)*(RADIUS+1),MARGIN_TOP,parseInt(seconds/10),ctx);
+    renderDigit(MARGIN_LEFT+(75+18)*(RADIUS+1),MARGIN_TOP,parseInt(seconds%10),ctx);
 }
 
-function renderDigit(x,y,num,cxt){
-    cxt.fillStyle = 'rgb(0,102,153)';
+function renderDigit(x,y,num,ctx){
+    ctx.fillStyle = 'rgb(0,102,153)';
 
     for(var i=0;i<digit[num].length;i++){
         for(var j=0;j<digit[num][i].length;j++){
             if(digit[num][i][j]==1){
-                cxt.beginPath();
-                cxt.arc(x+j*2*(RADIUS+1)+(RADIUS+1),y+i*2*(RADIUS+1)+(RADIUS+1),RADIUS,0,2*Math.PI);
-                cxt.closePath();
+                ctx.beginPath();
+                ctx.arc(x+j*2*(RADIUS+1)+(RADIUS+1),y+i*2*(RADIUS+1)+(RADIUS+1),RADIUS,0,2*Math.PI);
+                ctx.closePath();
 
-                cxt.fill();
+                ctx.fill();
             }
         }
     }
