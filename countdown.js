@@ -7,8 +7,10 @@ var WINDOW_WIDTH = 1024,
     //第一个数字距离画布左边距的距离
     MARGIN_LEFT = 30;
 //结束时间
-const endTime = new Date('2016/4/22,10:00:00');
-var curShowTimeSeconds = 0;
+const endTime = new Date('2016/4/23,10:00:00');
+var curShowTimeSeconds = 0,
+    balls = [];
+const colors = ['#33b5e5','#09c','#a6c','#93c','#9c0','#690','#fb3','#f80','#f44','#c00'];
 
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d');
@@ -42,7 +44,62 @@ function update(){
         curSeconds = curShowTimeSeconds % 60;
 
     if(nextSeconds != curSeconds){
+        if(parseInt(curHours/10) != parseInt(nextHours/10)){
+            addBalls(MARGIN_LEFT,MARGIN_TOP,parseInt(curHours/10));
+        }
+        if(parseInt(curHours%10) != parseInt(nextHours%10)){
+            addBalls(MARGIN_LEFT+15*(RADIUS+1),MARGIN_TOP,parseInt(curHours%10));
+        }
+        if(parseInt(curMinutes/10) != parseInt(nextMinutes/10)){
+            addBalls(MARGIN_LEFT+39*(RADIUS+1),MARGIN_TOP,parseInt(curMinutes/10));
+        }
+        if(parseInt(curMinutes%10) != parseInt(nextMinutes%10)){
+            addBalls(MARGIN_LEFT+54*(RADIUS+1),MARGIN_TOP,parseInt(curMinutes%10));
+        }
+        if(parseInt(curSeconds/10) != parseInt(nextSeconds/10)){
+            addBalls(MARGIN_LEFT+78*(RADIUS+1),MARGIN_TOP,parseInt(curSeconds/10));
+        }
+        if(parseInt(curSeconds%10) != parseInt(nextSeconds%10)){
+            addBalls(MARGIN_LEFT+93*(RADIUS+1),MARGIN_TOP,parseInt(curSeconds%10));
+        }
         curShowTimeSeconds = nextShowTimeSeconds;
+    }
+
+    updateBalls();
+}
+
+function updateBalls(){
+    for(var i=balls.length-1;i>=0;i--){
+        balls[i].x += balls[i].vx;
+        balls[i].y += balls[i].vy;
+        balls[i].vy += balls[i].g;
+
+        if(balls[i].y >= WINDOW_HEIGHT-RADIUS){
+            balls[i].y = WINDOW_HEIGHT-RADIUS;
+            balls[i].vy = -balls[i].vy*0.75;
+        }
+    }
+}
+
+function addBalls(x,y,num){
+    var aBall;
+
+    for(var i=digit[num].length-1;i>=0;i--){
+        for(var j=digit[num][i].length-1;j>=0;j--){
+            if(digit[num][i][j]==1){
+                aBall = {
+                    x:x+j*2*(RADIUS+1)+(RADIUS+1),
+                    y:y+i*2*(RADIUS+1)+(RADIUS+1),
+                    g:1.5+Math.random(),
+                    vx:Math.pow(-1,Math.ceil(Math.random()*1000))*4,
+                    vy:-5,
+                    color:colors[Math.floor(Math.random()*colors.length)]
+                    //color:'hsl('+Math.round(Math.random()*360)+',50%,70%)'
+                };
+
+                balls.push(aBall);
+            }
+        }
     }
 }
 
@@ -61,6 +118,14 @@ function render(ctx){
     renderDigit(MARGIN_LEFT+(60+9)*(RADIUS+1),MARGIN_TOP,10,ctx);
     renderDigit(MARGIN_LEFT+(60+18)*(RADIUS+1),MARGIN_TOP,parseInt(seconds/10),ctx);
     renderDigit(MARGIN_LEFT+(75+18)*(RADIUS+1),MARGIN_TOP,parseInt(seconds%10),ctx);
+
+    for(var i=balls.length-1;i>=0;i--){
+        ctx.fillStyle = balls[i].color;
+        ctx.beginPath();
+        ctx.arc(balls[i].x,balls[i].y,RADIUS,0,2*Math.PI,true);
+        ctx.closePath();
+        ctx.fill();
+    }
 }
 
 function renderDigit(x,y,num,ctx){
