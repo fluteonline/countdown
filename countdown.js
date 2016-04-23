@@ -7,7 +7,7 @@ var WINDOW_WIDTH = 1024,
     //第一个数字距离画布左边距的距离
     MARGIN_LEFT = 30;
 //结束时间
-const endTime = new Date('2016/4/23,10:00:00');
+const endTime = new Date('2016/4/24,10:00:00');
 var curShowTimeSeconds = 0,
     balls = [];
 const colors = ['#33b5e5','#09c','#a6c','#93c','#9c0','#690','#fb3','#f80','#f44','#c00'];
@@ -69,7 +69,11 @@ function update(){
 }
 
 function updateBalls(){
-    for(var i=balls.length-1;i>=0;i--){
+    var i,
+        len = balls.length,
+        cnt = 0;
+
+    for(i=0;i<len;i++){
         balls[i].x += balls[i].vx;
         balls[i].y += balls[i].vy;
         balls[i].vy += balls[i].g;
@@ -78,6 +82,16 @@ function updateBalls(){
             balls[i].y = WINDOW_HEIGHT-RADIUS;
             balls[i].vy = -balls[i].vy*0.75;
         }
+    }
+
+    for(i=0;i<len;i++){
+        if(balls[i].x + RADIUS > 0 && balls[i].x - RADIUS < WINDOW_WIDTH){
+            balls[cnt++] = balls[i];
+        }
+    }
+
+    while(balls.length>Math.min(300,cnt)){
+        balls.pop();
     }
 }
 

@@ -9,7 +9,7 @@ var countdown = {
     MARGIN_LEFT : 30,
     ctx : null,
     //结束时间
-    endTime : new Date('2016/4/23,10:00:00'),
+    endTime : new Date('2016/4/24,10:00:00'),
     curShowTimeSeconds : 0,
     balls: [],
 
@@ -69,20 +69,52 @@ var countdown = {
     },
 
     updateBalls:function(){
-        var i = countdown.balls.length - 1,
+        var i,
+            //len = countdown.balls.length,
             WINDOW_HEIGHT = countdown.WINDOW_HEIGHT,
-            RADIUS = countdown.RADIUS;
+            WINDOW_WIDTH = countdown.WINDOW_WIDTH,
+            RADIUS = countdown.RADIUS,
+            cnt = 0,
+            balls = countdown.balls,
+            len = balls.length;
 
-        for(;i>=0;i--){
-            countdown.balls[i].x += countdown.balls[i].vx;
-            countdown.balls[i].y += countdown.balls[i].vy;
-            countdown.balls[i].vy += countdown.balls[i].g;
+        for(i=0;i<len;i++){
+            balls[i].x += balls[i].vx;
+            balls[i].y += balls[i].vy;
+            balls[i].vy += balls[i].g;
 
-            if(countdown.balls[i].y >= WINDOW_HEIGHT-RADIUS){
-                countdown.balls[i].y = WINDOW_HEIGHT-RADIUS;
-                countdown.balls[i].vy = -countdown.balls[i].vy*0.75;
+            if(balls[i].y >= WINDOW_HEIGHT-RADIUS){
+                balls[i].y = WINDOW_HEIGHT-RADIUS;
+                balls[i].vy = -balls[i].vy*0.75;
             }
         }
+
+        for(i=0;i<len;i++){
+            if(balls[i].x + RADIUS > 0 && balls[i].x - RADIUS < WINDOW_WIDTH){
+                balls[cnt++] = balls[i];
+            }
+        }
+
+        countdown.balls = balls;
+
+        //for(i=0;i<len;i++){
+        //    countdown.balls[i].x += countdown.balls[i].vx;
+        //    countdown.balls[i].y += countdown.balls[i].vy;
+        //    countdown.balls[i].vy += countdown.balls[i].g;
+        //
+        //    if(countdown.balls[i].y >= WINDOW_HEIGHT-RADIUS){
+        //        countdown.balls[i].y = WINDOW_HEIGHT-RADIUS;
+        //        countdown.balls[i].vy = -countdown.balls[i].vy*0.75;
+        //    }
+        //}
+        //
+        //for(i=0;i<len;i++){
+        //    if(countdown.balls[i].x + RADIUS > 0 && countdown.balls[i].x - RADIUS < WINDOW_WIDTH){
+        //        countdown.balls[cnt++] = countdown.balls[i];
+        //    }
+        //}
+
+        countdown.balls.splice(Math.min(300,cnt));
     },
 
     addBalls:function(x,y,num){
