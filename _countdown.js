@@ -9,7 +9,7 @@ var countdown = {
     MARGIN_LEFT : 30,
     ctx : null,
     //结束时间
-    endTime : new Date('2016/4/24,10:00:00'),
+    endTime : new Date('2016/4/26,10:00:00'),
     curShowTimeSeconds : 0,
     balls: [],
 
@@ -20,6 +20,14 @@ var countdown = {
         canvas.width = countdown.WINDOW_WIDTH;
         canvas.height = countdown.WINDOW_HEIGHT;
         countdown.curShowTimeSeconds = countdown.getCurrentShowTimeSeconds();
+    },
+
+    responsive:function(){
+        countdown.WINDOW_WIDTH = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        countdown.WINDOW_HEIGHT = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        countdown.RADIUS = Math.round(countdown.WINDOW_WIDTH * 4./ 5 /108) - 1;
+        countdown.MARGIN_TOP = Math.round(countdown.WINDOW_HEIGHT / 5);
+        countdown.MARGIN_LEFT = Math.round(countdown.WINDOW_WIDTH / 10);
     },
 
     getCurrentShowTimeSeconds:function(){
@@ -189,7 +197,9 @@ var countdown = {
     },
 
     run:function(){
+        countdown.responsive();
         countdown.init();
+
         setInterval(function(){
             countdown.render(countdown.ctx);
             countdown.update();
