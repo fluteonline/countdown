@@ -9,13 +9,13 @@
 var WINDOW_WIDTH = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
     WINDOW_HEIGHT = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
 //圆半径
-    RADIUS = Math.round(WINDOW_WIDTH * 4./ 5 /108) - 1,
+    RADIUS = Math.round(WINDOW_WIDTH * 4 / 5 /108) - 1,
 //每个数字距离画布上边距的距离
     MARGIN_TOP = Math.round(WINDOW_HEIGHT / 5),
 //第一个数字距离画布左边距的距离
     MARGIN_LEFT = Math.round(WINDOW_WIDTH / 10);
 //结束时间
-const endTime = new Date('2016/4/26,10:00:00');
+const endTime = new Date('2016/4/27,10:00:00');
 var curShowTimeSeconds = 0,
     balls = [];
 const colors = ['#33b5e5','#09c','#a6c','#93c','#9c0','#690','#fb3','#f80','#f44','#c00'];
