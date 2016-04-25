@@ -9,7 +9,7 @@ var countdown = {
     MARGIN_LEFT : 30,
     ctx : null,
     //结束时间
-    endTime : new Date('2016/4/27,10:00:00'),
+    endTime : new Date(),
     curShowTimeSeconds : 0,
     balls: [],
 
@@ -20,6 +20,11 @@ var countdown = {
         canvas.width = countdown.WINDOW_WIDTH;
         canvas.height = countdown.WINDOW_HEIGHT;
         countdown.curShowTimeSeconds = countdown.getCurrentShowTimeSeconds();
+    },
+
+    time:function(){
+        var endTime = countdown.endTime.getTime();
+        countdown.endTime.setTime(endTime + 3600*1000);
     },
 
     responsive:function(){
@@ -198,6 +203,7 @@ var countdown = {
 
     run:function(){
         countdown.responsive();
+        countdown.time();
         countdown.init();
 
         setInterval(function(){
