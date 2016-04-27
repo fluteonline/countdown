@@ -13,10 +13,10 @@ var WINDOW_WIDTH = window.innerWidth || document.documentElement.clientWidth || 
 //每个数字距离画布上边距的距离
     MARGIN_TOP = Math.round(WINDOW_HEIGHT / 5),
 //第一个数字距离画布左边距的距离
-    MARGIN_LEFT = Math.round(WINDOW_WIDTH / 10),
-//结束时间
-    endTime = new Date();
-endTime.setTime(endTime.getTime() + 3600*1000);
+    MARGIN_LEFT = Math.round(WINDOW_WIDTH / 10);
+//结束时间（倒计时）
+//    endTime = new Date();
+//endTime.setTime(endTime.getTime() + 3600*1000);
 
 var curShowTimeSeconds = 0,
     balls = [];
@@ -38,8 +38,11 @@ setInterval(function(){
 
 function getCurrentShowTimeSeconds(){
     var curTime = new Date(),
-        ret = endTime.getTime() - curTime.getTime();
-    ret = Math.round(ret/1000);
+        //倒计时
+        //ret = endTime.getTime() - curTime.getTime();
+    //ret = Math.round(ret/1000);
+        //时钟
+        ret = curTime.getHours()*3600 + curTime.getMinutes()*60 + curTime.getSeconds();
 
     return ret >= 0? ret:0;
 }

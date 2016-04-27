@@ -36,9 +36,12 @@ var countdown = {
     },
 
     getCurrentShowTimeSeconds:function(){
-        var curTime = new Date(),
-            ret = countdown.endTime.getTime() - curTime.getTime();
-        ret = Math.round(ret/1000);
+        var curTime,ret;
+        curTime = new Date();
+        //倒计时
+        //ret = Math.round( (countdown.endTime.getTime() - curTime.getTime()) /1000);
+        //时钟
+        ret = curTime.getHours()*3600 + curTime.getMinutes()*60 + curTime.getSeconds();
 
         return ret >= 0? ret:0;
     },
@@ -203,7 +206,6 @@ var countdown = {
 
     run:function(){
         countdown.responsive();
-        countdown.time();
         countdown.init();
 
         setInterval(function(){
